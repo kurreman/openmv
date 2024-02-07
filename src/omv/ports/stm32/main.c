@@ -47,6 +47,7 @@
 #include "led.h"
 #include "spi.h"
 #include "i2c.h"
+#include "i2s.h"
 #include "uart.h"
 #include "dac.h"
 #include "can.h"
@@ -308,6 +309,9 @@ soft_reset:
     #endif
     i2c_init0();
     spi_init0();
+    #if MICROPY_HW_ENABLE_I2S
+    i2s_init0();
+    #endif
     uart_init0();
     fb_alloc_init0();
     omv_gpio_init0();
@@ -582,6 +586,9 @@ soft_reset_exit:
     timer_deinit();
     i2c_deinit_all();
     spi_deinit_all();
+    #if MICROPY_PY_MACHINE_I2S
+    i2s_deinit_all();
+    #endif
     uart_deinit_all();
     #if MICROPY_HW_ENABLE_CAN
     can_deinit_all();
